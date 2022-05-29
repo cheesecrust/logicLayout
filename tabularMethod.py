@@ -1,6 +1,20 @@
 import copy
 
 
+def printTable(table, mterm):
+    for i in table:
+        tmp = ' '
+        for k in range(len(mterm)):
+            for j in i:
+                if j == mterm[k]:
+                    tmp += j + ' '
+                    break
+            else:
+                tmp += 'X '
+        print(tmp)
+    print("---------------")
+
+
 def makeTable(mterm, pi):
     table = [[] for _ in range(len(pi))]
 
@@ -53,6 +67,7 @@ def findepi(mterm, tabular, answer):
         epiIdx = []
         epiIdx = (colD(tabular, mterm))
         newtab = [[] for _ in range(len(tabular))]
+
         for i in epiIdx:
             epi.append(answer[i])
             for j in range(len(tabular[i])):
@@ -69,7 +84,7 @@ def findepi(mterm, tabular, answer):
         tmp = tabular
 
         tabular = (rowD(newtab))
-        # print(tabular)
+
         if(tabular == emptytab or tmp == tabular):
             return epiList, tabular
 
@@ -137,8 +152,11 @@ def solution(minterm):
 
     emptytab = [[] for _ in range(len(answer))]
     tabular = (makeTable(mterm, answer))
+    printTable(tabular, mterm)
 
     epi, tabular = (findepi(mterm, tabular, answer))
+    printTable(tabular, mterm)
+
     if(emptytab != tabular):
         oritabulr = copy.deepcopy(tabular)
         for i in range(len(oritabulr)):
@@ -152,6 +170,8 @@ def solution(minterm):
     answer += finalepi
     for i in range(len(answer)):
         answer[i] = answer[i].replace("2", "-")
+
+    printTable(tabular, mterm)
 
     return answer
 
